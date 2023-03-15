@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build":"npm i",
     "dev": "run-p ourserver ourwebpack",
     "ourwebpack": "webpack --watch",
     "ourserver": "nodemon server-compiled",
