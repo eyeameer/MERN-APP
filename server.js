@@ -61,13 +61,13 @@ app.get("/admin", (req, res) => {
   res.render("admin")
 })
 
-app.get("/.netlify/functions/api/animals", async (req, res) => {
+app.get("/api/animals", async (req, res) => {
   const allAnimals = await Model.find({})
 
   res.status(200).json(allAnimals)
 })
 
-app.post("/.netlify/functions/create-animal", upload.single("photo"), ourCleanup, async (req, res) => {
+app.post("/create-animal", upload.single("photo"), ourCleanup, async (req, res) => {
   if (req.file) {
     const photofilename = `${Date.now()}.jpg`
     await sharp(req.file.buffer).resize(844, 456).jpeg({ quality: 60 }).toFile(path.join("public", "uploaded-photos", photofilename))
@@ -80,7 +80,7 @@ app.post("/.netlify/functions/create-animal", upload.single("photo"), ourCleanup
   res.send(info)
 })
 
-app.delete("/.netlify/functions/animal/:id", async (req, res) => {
+app.delete("/animal/:id", async (req, res) => {
   if (typeof req.params.id != "string") req.params.id = ""
   const doc = await Model.findOne({ _id: new ObjectId(req.params.id) })
   await Model.findOneAndDelete({_id: new ObjectId(req.params.id)})
@@ -91,7 +91,7 @@ app.delete("/.netlify/functions/animal/:id", async (req, res) => {
   res.send("Good job")
 })
 
-app.post("/.netlify/functions/update-animal", upload.single("photo"), ourCleanup, async (req, res) => {
+app.post("/update-animal", upload.single("photo"), ourCleanup, async (req, res) => {
   if (req.file) {
     // if they are uploading a new photo
     const photofilename = `${Date.now()}.jpg`
