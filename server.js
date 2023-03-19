@@ -10,6 +10,7 @@ const sanitizeHTML = require("sanitize-html")
 const fse = require("fs-extra")
 const sharp = require("sharp")
 let db
+const Auth_check=process.env.AUTH_VAL
 const path = require("path")
 const React = require("react")
 const ReactDOMServer = require("react-dom/server")
@@ -29,7 +30,7 @@ app.use(express.urlencoded({ extended: false }))
 
 function passwordProtected(req, res, next) {
   res.set("WWW-Authenticate", "Basic realm='Our MERN App'")
-  if (req.headers.authorization == "Basic ZXllQW1lZXI6QW1lZXI4NjM5QW1lZXI4NjM5QW1lZXI4NjM5") {
+  if (req.headers.authorization == Auth_check) {
     next()
   } else {
     console.log(req.headers.authorization)
